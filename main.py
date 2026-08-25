@@ -1,3 +1,4 @@
+from csv import DictReader
 from datetime import date,timedelta
 import pickle
 import csv
@@ -25,29 +26,48 @@ products = sorted_products
 
 
 
+
+
+
+
+
+
+
+
 Beginner_or_not=input("Are you new to skincare? ").upper()
 if Beginner_or_not =="YES":
-    concern_list = []
-    concerns_names = []
-    with open("skin_concerns.csv", "r", newline="") as f:
-        reader = csv.DictReader(f)
-        for rows in reader:
-            concern_list.append(rows)
+    beginner_list=[]
+    with open("beginner_routine.csv","r",newline="")as g:
 
-        for concern_dict in concern_list:
-            concerns_names.append(concern_dict["Concern"])
+        reader_2 = csv.DictReader(g)
+        for row in reader_2 :
+            beginner_list.append(row)
 
-        for i in range(1, len(concerns_names) + 1):
-            print(i, ".", concerns_names[i - 1])
+    print(beginner_list)
+    skin_type=["Oily","Combination","Dry","Combination","Sensitive","Normal"]
+    for i in range(1,len(skin_type)+1):
+        print(i,".",skin_type[i-1])
+    skin_type_choice=int(input("Enter the no. corresponding to your skin type: "))
 
-        user_concern_choice = int(input("enter the no. corresponding to your skincare concern: "))
-        recommended_active = concern_list[user_concern_choice - 1]["Recommended_Actives"]
-        avoid_combining = concern_list[user_concern_choice - 1]["Avoid_Combining"]
-        usage_tips = concern_list[user_concern_choice - 1]["Usage_Tip"]
+    print("Cleanser beginner_list[skin_type_choice]["Cleanser_Example"])
 
-        print("The recommended active for your skin concern is: ", recommended_active)
-        print("Avoid combing", avoid_combining)
-        print("Usage tips:", usage_tips)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
