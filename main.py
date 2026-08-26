@@ -43,13 +43,25 @@ if Beginner_or_not =="YES":
         for row in reader_2 :
             beginner_list.append(row)
 
-    print(beginner_list)
-    skin_type=["Oily","Combination","Dry","Combination","Sensitive","Normal"]
-    for i in range(1,len(skin_type)+1):
-        print(i,".",skin_type[i-1])
-    skin_type_choice=int(input("Enter the no. corresponding to your skin type: "))
 
-    print("Cleanser beginner_list[skin_type_choice]["Cleanser_Example"])
+    skin_type=["Oily","Dry","Combination","Sensitive","Normal"]
+
+    for i in range(1,len(skin_type)+1):
+        print(i,".",skin_type[i-1],":",beginner_list[i-1]["Description"])
+    skin_type_choice = int(input("Enter the no. corresponding to your skin type: "))
+
+
+    print("1.Budget Friendly options")
+    print("2.High end options")
+    budget_low_high=int(input("Enter the no. corresponding to your choice: "))
+    if budget_low_high==1:
+        print("Cleanser recommended for your skin type is:",beginner_list[skin_type_choice-1]["Cleanser_Budget"])
+        print("Moisturizer recommended for your skin type is:",beginner_list[skin_type_choice-1]["Moisturizer_Budget"])
+        print("Sunscreen recommended for your skin type is:",beginner_list[skin_type_choice-1]["Sunscreen_Budget"])
+
+
+
+
 
 
 
