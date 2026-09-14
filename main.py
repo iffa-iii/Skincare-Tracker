@@ -319,25 +319,70 @@ while True:
             print("Avoid combing ", avoid_combining)
             print("Usage tips: ", usage_tips)
 
-    # ----------------------------------------------------------------
-    # MODULE 5.9: GENERATE REPORT (TEXT FILE - OUTPUT)
-    # [Not yet implemented]
-    # ----------------------------------------------------------------
+        # ----------------------------------------------------------------
+        # MODULE 5.9: GENERATE REPORT (TEXT FILE - OUTPUT)
+        # Writes a summary of expiry status, AM/PM routine, and low-stock
+        # products to a new text file, skincare_report.txt.
+        # ----------------------------------------------------------------
     elif choice == "9":
-        print("Generate Report")
+        with open("skincare_report.txt", "w") as f:
+            f.write("SKINCARE SHELF-LIFE & ROUTINE TRACKER - REPORT\n")
+            f.write("Generated on: " + str(date.today()) + "\n")
+            f.write("=" * 50 + "\n\n")
 
-    # ----------------------------------------------------------------
-    # MODULE 5.10: EXPORT CSV (CSV FILE - OUTPUT)
-    # [Not yet implemented]
-    # ----------------------------------------------------------------
+            f.write("EXPIRY STATUS\n")
+            f.write("-" * 50 + "\n")
+            for p in products:
+                expiry_date = p["DateOpened"] + (timedelta(days=30) * p["PAO"])
+                days_left = (expiry_date - date.today()).days
+                if days_left < 0:
+                    status = "EXPIRED"
+                elif days_left <= 14:
+                    status = "EXPIRING SOON"
+                else:
+                    status = "OK"
+                f.write(p["Name"] + " (" + p["Category"] + ") expires on " + str(expiry_date) +
+                        " - " + str(days_left) + " days left - " + status + "\n")
+
+            f.write("\nAM ROUTINE\n")
+            f.write("-" * 50 + "\n")
+            for p in products:
+                if p["RoutineStep"] == "AM" or p["RoutineStep"] == "BOTH":
+                    f.write("- " + p["Name"] + " (" + p["Category"] + ")\n")
+
+            f.write("\nPM ROUTINE\n")
+            f.write("-" * 50 + "\n")
+            for p in products:
+                if p["RoutineStep"] == "PM" or p["RoutineStep"] == "BOTH":
+                    f.write("- " + p["Name"] + " (" + p["Category"] + ")\n")
+
+            f.write("\nLOW STOCK (25% or less remaining)\n")
+            f.write("-" * 50 + "\n")
+            for p in products:
+                if p["AmountLeft"] <= 25:
+                    f.write("- " + p["Name"] + " - " + str(p["AmountLeft"]) + "% left\n")
+
+        print("Report generated and saved to skincare_report.txt")
+
+        # ----------------------------------------------------------------
+        # MODULE 5.10: EXPORT CSV (CSV FILE - OUTPUT)
+        # Writes the full product list to a CSV file, skincare_products.csv,
+        # so it can be opened in Excel or shared as a spreadsheet.
+        # ----------------------------------------------------------------
     elif choice == "10":
-        print("Export CSV")
+        with open("skincare_products.csv", "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["Name", "Category", "Date Opened", "PAO (months)",
+                             "Routine Step", "Amount Left"])
+            for p in products:
+                writer.writerow([p["Name"], p["Category"], str(p["DateOpened"]),
+                                 p["PAO"], p["RoutineStep"], p["AmountLeft"]])
 
-    # ----------------------------------------------------------------
-    # MODULE 5.11: EXIT (BINARY FILE - OUTPUT)
-    # Saves the current product list back to products.dat before
-    # closing the program, so nothing is lost.
-    # ----------------------------------------------------------------
+        print("Products exported to skincare_products.csv")
+
+        # ----------------------------------------------------------------
+        # MODULE 5.11: EXIT (BINARY FILE - OUTPUT)
+        # ----------------------------------------------------------------
     elif choice == "11":
         with open("products.dat", "wb") as f:
             pickle.dump(products, f)
