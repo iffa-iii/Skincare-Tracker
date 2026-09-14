@@ -101,7 +101,9 @@ if Beginner_or_not == "YES":
         products.append(starter_moisturizer)
         products.append(starter_sunscreen)
         sort_products()
-        print("Your first personalised skincare routine/products added!\n You can update their real opening date and PAO later from the Update menu.\n You can add more products based on your SKIN CONCERNS through the recommendation menu.")
+        print("Your first personalised skincare routine/products added!"
+              "\n You can update their real opening date and PAO later from the Update menu."
+              "\n You can add more products based on your SKIN CONCERNS through the recommendation menu.")
 
 
 # ====================================================================
@@ -133,7 +135,9 @@ while True:
         month = int(input("enter the month of opening: "))
         day = int(input("enter the day of opening: "))
         date_opened = date(year, month, day)
-        period_after_opening = int(input("Enter the PAO in months — check the small jar icon on the packaging, e.g. 6M, 12M:"))
+        period_after_opening = int(input("Enter the PAO in months "
+                                         "— check the small jar icon on the packaging, e.g. 6M, 12M:"))
+
 
         print("Used in AM, PM, or Both? ")
         routine_times = ["AM", "PM", "BOTH"]
@@ -170,7 +174,8 @@ while True:
                 print(products[i - 1])
 
         # what the user wants to update?
-        update_fields = ["Product Name", "Product Category", "Date Of Opening ", "PAO(Period After Opening", "Routine Step", "Exit"]
+        update_fields = ["Product Name", "Product Category", "Date Of Opening ",
+                         "PAO(Period After Opening", "Routine Step", "Exit"]
         for i in range(1, len(update_fields) + 1):
             print(i, ".", update_fields[i - 1])
 
@@ -234,7 +239,8 @@ while True:
             print(i, ". ", products[i - 1]["Name"])
 
         expirydate_choice = int(input("Enter the corresponding no. of the product to check for: "))
-        expiry_date = products[expirydate_choice - 1]["DateOpened"] + (timedelta(days=30) * products[expirydate_choice - 1]["PAO"])
+        expiry_date = (products[expirydate_choice - 1]["DateOpened"] +
+                       (timedelta(days=30) * products[expirydate_choice - 1]["PAO"]))
         print("This product will expire on", expiry_date)
         todays_date = date.today()
         no_of_days = expiry_date - todays_date
@@ -307,7 +313,9 @@ while True:
             avoid_combining = concern_list[user_concern_choice - 1]["Avoid_Combining"]
             usage_tips = concern_list[user_concern_choice - 1]["Usage_Tip"]
 
-            print("The recommended active for your skin concern is: ", recommended_active, "So look for products with them!")
+            print("The recommended active for your skin concern is: ", recommended_active,
+                  "So look for products with them!")
+
             print("Avoid combing ", avoid_combining)
             print("Usage tips: ", usage_tips)
 
